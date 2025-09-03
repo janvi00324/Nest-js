@@ -8,10 +8,14 @@ import { UserService } from '../users/user.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { User } from '../users/entities/user.entity';
 import { comparePassword, generateOTP, hashPassword } from 'src/utils/common';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   //You can use dto here also instead of Partial<User>
   async register(body: Partial<User>): Promise<User> {
@@ -44,9 +48,12 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }
+    const payload = { userId: user.id, email: user.email , role :user.role};
+    const accessToken = this.jwtService.sign(payload);
 
     return {
       message: 'Login successful',
+      accessToken,
       user,
     };
   }

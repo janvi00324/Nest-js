@@ -35,8 +35,8 @@ export class User {
   @Column({ type: 'enum', enum: ROLES, default: ROLES.USER })
   role: RoleType;
 
-  @Column({ type: 'text', nullable: true })
-  refreshToken: string | null;
+  // @Column({ type: 'text', nullable: true })
+  // refreshToken: string | null;
   
   //timestamp,timestamptz,date,time
   @CreateDateColumn({ name: 'created_at', type: 'date' })

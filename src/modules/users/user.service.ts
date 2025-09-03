@@ -35,7 +35,11 @@ export class UserService {
     return this.usersRepository.findOne({ where: { email } });
   }
 
-  async findByIdAndUpdate(id: number, updateData: Partial<User>) {
+  async findByIdAndUpdate(id: string, updateData: Partial<User>) {
     return this.usersRepository.update(id, updateData);
+  }
+
+  async findById(id: string): Promise<User | null> {
+    return this.usersRepository.findOne({ where: { id } });
   }
 }
