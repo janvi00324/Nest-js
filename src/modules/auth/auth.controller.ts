@@ -16,15 +16,14 @@ import { UserService } from '../users/user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { loginDto } from '../users/dto/login.dto';
-import { FileUploadService } from 'src/common/services/file-upload/file-upload.service';
 import * as fs from 'fs/promises';
+import { uploadImageToCloudinary } from 'src/utils/cloudinary';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
-    private readonly fileUploadService: FileUploadService,
   ) {}
 
   @Post('sign-up')
@@ -40,11 +39,11 @@ export class AuthController {
     if (!file) {
       throw new BadRequestException('File is required');
     }
-    const uploadResult = await this.fileUploadService.handleFileUpload(
+
+    const cloudinaryUrl: string = await uploadImageToCloudinary(
       file,
       'profile-pic',
     );
-    const filepath: string = uploadResult?.filePath;
     //RESPONSE
     // if (existingUser) {
     //   //this wil; send 201 status code by default
@@ -56,8 +55,7 @@ export class AuthController {
       throw new ConflictException('User already exists');
     }
 
-    let imagePath = null;
-    const userPayload = { ...body, profileImage: filepath };
+    const userPayload = { ...body, profileImage: cloudinaryUrl };
     const user = await this.authService.register(userPayload);
     //by default send message with 201 statuscode
     return { message: 'User registered successfully', data: user };
