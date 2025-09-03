@@ -5,22 +5,13 @@ import { UserModule } from '../users/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../../common/strategies/jwt.strategy';
 import { MulterModule } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
+import {  memoryStorage } from 'multer';
 import { FileUploadModule } from '../../common/services/file-upload/file-upload.module';
 @Module({
   imports: [
     MulterModule.register({
-      storage: diskStorage({
-        destination: './uploads',
-        filename: (req, file, cb) => {
-          const filename = `${Date.now()}-${file.originalname}`;
-          cb(null, filename);
-        },
-      }),
+      storage: memoryStorage(),
     }),
-    // MulterModule.register({
-    //   storage: memoryStorage(), // keeps file in memory
-    // }),
     UserModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,

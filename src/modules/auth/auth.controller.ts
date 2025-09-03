@@ -40,8 +40,11 @@ export class AuthController {
     if (!file) {
       throw new BadRequestException('File is required');
     }
-    console.log('file :>> ', file);
-    const uploadResult = this.fileUploadService.handleFileUpload(file);
+    const uploadResult = await this.fileUploadService.handleFileUpload(
+      file,
+      'profile-pic',
+    );
+    const filepath: string = uploadResult?.filePath;
     //RESPONSE
     // if (existingUser) {
     //   //this wil; send 201 status code by default
@@ -50,14 +53,12 @@ export class AuthController {
 
     //this will send 409 status code , conflict
     if (existingUser) {
-      //If you used disk storage then you need manually manage
-      await fs.unlink(file.path);
       throw new ConflictException('User already exists');
     }
 
     let imagePath = null;
-
-    const user = await this.authService.register(body);
+    const userPayload = { ...body, profileImage: filepath };
+    const user = await this.authService.register(userPayload);
     //by default send message with 201 statuscode
     return { message: 'User registered successfully', data: user };
   }
