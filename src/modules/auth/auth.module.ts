@@ -6,11 +6,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from '../../common/strategies/jwt.strategy';
 import { MulterModule } from '@nestjs/platform-express';
 import {  memoryStorage } from 'multer';
+import { CloudinaryModule } from 'src/common/services/cloudinary/ cloudinary.module';
 @Module({
   imports: [
     MulterModule.register({
       storage: memoryStorage(),
     }),
+    CloudinaryModule,
     UserModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,

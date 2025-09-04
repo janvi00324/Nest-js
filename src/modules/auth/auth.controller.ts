@@ -16,14 +16,14 @@ import { UserService } from '../users/user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { loginDto } from '../users/dto/login.dto';
-import * as fs from 'fs/promises';
-import { uploadImageToCloudinary } from 'src/utils/cloudinary';
+import { CloudinaryService } from 'src/common/services/cloudinary/cloudinary.service';
 
 @Controller('auth')
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
+    private readonly cloudinaryService: CloudinaryService,
   ) {}
 
   @Post('sign-up')
@@ -40,7 +40,7 @@ export class AuthController {
       throw new BadRequestException('File is required');
     }
 
-    const cloudinaryUrl: string = await uploadImageToCloudinary(
+    const cloudinaryUrl: string = await this.cloudinaryService.uploadImage(
       file,
       'profile-pic',
     );
