@@ -15,7 +15,7 @@ import { User } from '../users/entities/user.entity';
 import { UserService } from '../users/user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
-import { loginDto } from '../users/dto/login.dto';
+import { LoginDto } from '../users/dto/login.dto';
 import { FileUploadService } from 'src/common/services/cloudinary/file-upload.service';
 
 @Controller('auth')
@@ -62,7 +62,7 @@ export class AuthController {
   }
 
   @Post('/login')
-  async login(@Body() body: loginDto) {
-    return this.authService.login(body.email, body.password);
+  async login(@Body() body: LoginDto) {
+    return this.authService.login(body);
   }
 }
