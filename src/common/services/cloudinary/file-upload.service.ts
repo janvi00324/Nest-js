@@ -1,9 +1,9 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import cloudinary from 'src/config/cloudinary.config';
 import { Readable } from 'stream';
-@Injectable()
 
-export class CloudinaryService {
+@Injectable()
+export class FileUploadService {
   async uploadImage(
     file: Express.Multer.File,
     folder: string,
