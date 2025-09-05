@@ -7,6 +7,7 @@ import { appConfig } from './config/env';
 import { UserModule } from './modules/users/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { MailModule } from './common/services/mail/mail.module';
+import { BcryptModule } from './common/services/bcrypt/bcrypt.moldule';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -28,6 +29,7 @@ import { MailModule } from './common/services/mail/mail.module';
     MailModule,
     UserModule,
     AuthModule,
+    BcryptModule,
   ],
   controllers: [AppController],
   providers: [AppService],
