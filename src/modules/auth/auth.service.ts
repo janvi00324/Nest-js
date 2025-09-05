@@ -10,12 +10,14 @@ import { comparePassword, generateOTP, hashPassword } from '../../utils/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from '../users/dto/login.dto';
-
+import { v4 as uuidv4 } from 'uuid';
+import { MailService } from 'src/common/services/mail/mail.service';
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
+    private readonly mailService: MailService,
   ) {}
 
   //You can use dto here also instead of Partial<User>
@@ -27,6 +29,8 @@ export class AuthService {
     }
     const hashedPassword = await hashPassword(body.password);
     const otp = generateOTP();
+
+    await this.mailService.sendVerificationOtpMail(body.email, otp);
 
     console.log('otp :>> ', otp);
     const user = await this.userService.createUser({
@@ -62,5 +66,24 @@ export class AuthService {
       accessToken,
       user,
     };
+  }
+
+  async sendResetPasswordLink(email: string) {
+    const user = await this.userService.findByEmail(email);
+    if (!user) {
+      throw new BadRequestException('User with this email does not exist');
+    }
+    const token = uuidv4();
+    //number
+    // const expiry = Date.now() + 10 * 60 * 1000;
+    const expiry = new Date(Date.now() + 10 * 60 * 1000);
+
+    await this.userService.findByIdAndUpdate(user.id, {
+      resetToken: token,
+      resetTokenExpiry: expiry,
+    });
+
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${token}&email=${email}`;
+    await this.mailService.resetPasswordMail(email, resetLink);
   }
 }

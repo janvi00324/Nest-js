@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { appConfig } from './config/env';
 import { UserModule } from './modules/users/user.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { MailModule } from './common/services/mail/mail.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -24,8 +25,9 @@ import { AuthModule } from './modules/auth/auth.module';
       // Use this when you get repository via DataSource directly (autoLoadEntities won’t work here).
       // entities: [__dirname + '/**/*.entity{.ts,.js}'],
     }),
+    MailModule,
     UserModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
