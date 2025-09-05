@@ -15,10 +15,10 @@ bcrypt → Hashing and comparing passwords.
 @nestjs/passport → Integrates Passport strategies into NestJS.
 
 📂 File Uploads / Storage
-multer → Middleware for handling file uploads.
+<!-- multer → Middleware for handling file uploads. -->
 @types/multer → TypeScript types for multer.
 cloudinary → Upload & manage media files in Cloudinary.
-stream → Node.js stream handling (used in uploads/downloads).
+<!-- stream → Node.js stream handling (used in uploads/downloads). -->
 
 📑 Validation & Transformation
 class-transformer → Transform plain objects ↔️ class instances.
@@ -33,14 +33,17 @@ uuid → Generate unique IDs (tokens, refs).
 typeorm → ORM for relational databases.
 pg → PostgreSQL driver for TypeORM.
 
+node cron 
+@nestjs/schedule
+
 🚀 NestJS Core
 @nestjs/common → Decorators, helpers, exceptions, interceptors, guards, pipes.
 @nestjs/config → Load config/env module.
 @nestjs/core → Bootstrapping (NestFactory) + Nest runtime.
 @nestjs/platform-express → Express.js adapter (HTTP APIs).
 @nestjs/typeorm → TypeORM integration with NestJS.
-@nestjs/mapped-types → Utilities for DTOs (PartialType, PickType, etc.).
-reflect-metadata → Enables decorators & dependency injection.
+<!-- @nestjs/mapped-types → Utilities for DTOs (PartialType, PickType, etc.). -->
+<!-- reflect-metadata → Enables decorators & dependency injection. -->
 
 cron job 
 @nestjs/schedule
@@ -51,3 +54,10 @@ File Uploads
 Mail sending
 Task Scheduling
 Event Emitters 
+Stripe
+Redis
+
+MGIP (Middleware → Guards → Interceptors → Pipes → Controller → Route Handler → Response → Interceptors):
+
+4 score 
+Application, Module , Controller, Route 
