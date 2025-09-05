@@ -35,9 +35,16 @@ export class User {
   @Column({ type: 'enum', enum: ROLES, default: ROLES.USER })
   role: RoleType;
 
-  // @Column({ type: 'text', nullable: true })
-  // refreshToken: string | null;
-  
+  @Column({ name: 'reset_token', type: 'varchar', nullable: true })
+  resetToken: string;
+
+  @Column({
+    name: 'reset_token_expiry',
+    type: 'timestamp with time zone',
+    nullable: true,
+  })
+  resetTokenExpiry: Date;
+
   //timestamp,timestamptz,date,time
   @CreateDateColumn({ name: 'created_at', type: 'date' })
   createdAt: Date;
@@ -45,6 +52,6 @@ export class User {
   @UpdateDateColumn({ name: 'updated_at', type: 'date' })
   updatedAt: Date;
 
-  @DeleteDateColumn({ name: 'deleted_at', type: 'time with time zone' })
+  @DeleteDateColumn({ name: 'deleted_at', type: 'timestamp with time zone' })
   deletedAt: Date;
 }
