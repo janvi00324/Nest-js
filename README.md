@@ -41,3 +41,13 @@ pg → PostgreSQL driver for TypeORM.
 @nestjs/typeorm → TypeORM integration with NestJS.
 @nestjs/mapped-types → Utilities for DTOs (PartialType, PickType, etc.).
 reflect-metadata → Enables decorators & dependency injection.
+
+cron job 
+@nestjs/schedule
+
+Database Integration
+Authentication & Authorization
+File Uploads
+Mail sending
+Task Scheduling
+Event Emitters 

@@ -8,6 +8,7 @@ import { UserModule } from './modules/users/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { MailModule } from './common/services/mail/mail.module';
 import { BcryptModule } from './common/services/bcrypt/bcrypt.moldule';
+import { CronModule } from './common/services/cron/cron.modules';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,6 +31,7 @@ import { BcryptModule } from './common/services/bcrypt/bcrypt.moldule';
     UserModule,
     AuthModule,
     BcryptModule,
+    CronModule,
   ],
   controllers: [AppController],
   providers: [AppService],
